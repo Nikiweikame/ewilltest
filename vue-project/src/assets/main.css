@@ -1,9 +1,15 @@
-@import './base.css';
+@import "./base.css";
 
-*{
+* {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  min-width: 414px;
+}
+
+#app {
+  background: #e2d9d3;
+  /* background: linear-gradient(#204379 0 800px, #e2d9d3 800px 100%); */
 }
