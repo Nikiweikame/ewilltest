@@ -29,7 +29,7 @@ function animateBobble(bobble, opacity, Xplus, x, y, size) {
       bobble.style.transform = `translate(0px, 0px)`;
     }, 3000);
     setTimeout(() => {
-      animateBobble(bobble, 100, Xplus, 0, 0, size);
+      animateBobble(bobble, 200, Xplus, 0, 0, size);
       bobble.style.opacity = 1;
     }, 6000);
     // return;
@@ -48,9 +48,9 @@ onMounted(() => {
   animatePaddle();
   const bigBbobble = document.querySelector(".header__big-bobble");
   const smallBbobble = document.querySelector(".header__small-bobble");
-  animateBobble(bigBbobble, 100, true, 0, 0, 20);
+  animateBobble(bigBbobble, 200, false, 0, 0, 20);
   setTimeout(() => {
-    animateBobble(smallBbobble, 100, false, 0, 0, 12);
+    animateBobble(smallBbobble, 180, true, 0, 0, 12);
   }, 500);
   setInterval(animatePaddle, 5000);
 });
@@ -60,7 +60,7 @@ onMounted(() => {
   // background-color: #204379;
   height: 789px;
   padding: 60px 24px 40px;
-  background: url(/ewill-project/src/assets/白色海浪.png) center 50px / cover
+  background: url(/ewill-project/src/assets/白色海浪.png) -500px 50px/1414px 739px
       no-repeat,
     #204379;
   &__title {
@@ -166,7 +166,7 @@ onMounted(() => {
     }
   }
   &__paragraph {
-    height: 489px;
+    // height: 489px;
     border-radius: 20px;
     border: 2px solid var(--primary-color-2, #b57556);
     background: var(--primary-color-3, #dae4f1);
@@ -176,11 +176,11 @@ onMounted(() => {
       margin: 16px 0 24px;
       padding: 0 1px 0 18px;
       line-height: 140%;
-      height: 44px;
+      // height: 44px;
     }
     ol:last-child {
       margin-bottom: 0px;
-      height: 261px;
+      // height: 261px;
       line-height: 180%;
     }
     &-title {
@@ -242,32 +242,43 @@ onMounted(() => {
       transform: scale(0);
       opacity: 1;
     }
-    50% {
-      transform: scale(2);
+    75% {
+      transform: scale(3);
       opacity: 0;
     }
     100% {
-      transform: scale(1);
+      transform: scale(0);
       opacity: 0;
     }
   }
   &__big-bobble {
     position: absolute;
-    right: 15px;
-    top: -53px;
+    right: 20px;
+    top: -0px;
     transition: all 1s ease;
   }
   &__small-bobble {
     position: absolute;
     right: 3px;
-    top: -73px;
+    top: -20px;
     transition: all 1s ease;
   }
 }
 
 @media screen and (min-width: 768px) {
-  header {
-    height: 634px;
+  .header {
+    height: 643px;
+    background: url(/ewill-project/src/assets/白色海浪.png) -1693px 38px/4784px 586px
+        no-repeat,
+      #204379;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .header {
+    &__paragraph {
+      width: 808px;
+      margin: 0 auto;
+    }
   }
 }
 </style>
@@ -280,6 +291,26 @@ onMounted(() => {
     <div class="header__button header__button--special">FORM</div>
     <div class="header__paragraph">
       <div class="header__icon">
+        <svg
+          class="header__big-bobble"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="10" cy="10" r="9.5" stroke="white" />
+        </svg>
+        <svg
+          class="header__small-bobble"
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="6" cy="6" r="5.5" stroke="white" />
+        </svg>
         <svg
           class="header__canoe"
           width="80"
@@ -625,26 +656,6 @@ onMounted(() => {
               <rect width="58" height="58" fill="white" />
             </clipPath>
           </defs>
-        </svg>
-        <svg
-          class="header__big-bobble"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="10" cy="10" r="9.5" stroke="white" />
-        </svg>
-        <svg
-          class="header__small-bobble"
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="6" cy="6" r="5.5" stroke="white" />
         </svg>
       </div>
 
