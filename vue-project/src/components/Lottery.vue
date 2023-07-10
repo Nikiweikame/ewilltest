@@ -193,7 +193,7 @@ const payment = ref("digital payment");
 }
 </style>
 <template>
-  <div class="lottery">
+  <div class="lottery" id="form">
     <div class="lottery__form">
       <fieldset class="lottery__input-group">
         <legend class="lottery__title-content">

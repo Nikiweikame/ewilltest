@@ -80,6 +80,8 @@ onMounted(() => {
     }
   }
   &__button {
+    display: block;
+    text-decoration: none;
     background-color: #b57556;
     padding: 16px 20px;
     width: 200px;
@@ -287,7 +289,7 @@ onMounted(() => {
       <p>There is no one</p>
       <p>who loves pain</p>
     </div>
-    <div class="header__button header__button--special">FORM</div>
+    <a href="#form" class="header__button header__button--special">FORM</a>
     <div class="header__paragraph">
       <div class="header__icon">
         <svg
