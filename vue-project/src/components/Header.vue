@@ -1,6 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
+function scrollToSection() {
+  const targetSection = document.getElementById('form');
+  targetSection.scrollIntoView({ behavior: 'smooth' });
+}
 const paddleSwitch = ref(true);
 function animatePaddle() {
   const paddle = document.querySelector(".header__paddle");
@@ -97,6 +101,7 @@ onMounted(() => {
     line-height: 125%;
     letter-spacing: 3.6px;
     margin: 32px auto;
+    cursor: pointer;
     &--special {
       text-transform: capitalize;
       border: none;
@@ -289,7 +294,7 @@ onMounted(() => {
       <p>There is no one</p>
       <p>who loves pain</p>
     </div>
-    <a href="#form" class="header__button header__button--special">FORM</a>
+    <div @click="scrollToSection" class="header__button header__button--special">FORM</div>
     <div class="header__paragraph">
       <div class="header__icon">
         <svg

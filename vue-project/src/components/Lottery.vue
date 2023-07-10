@@ -80,8 +80,8 @@ const consumption = ref({
       // console.log(consumption.value.status, consumption.value.value);
       return;
     } else if (!(parseInt(consumption.value.value) > 0)) {
-      // consumption.value.status = 2;
-      console.log(consumption.value.status);
+      consumption.value.status = 2;
+      // console.log(consumption.value.status);
       return;
     } else {
       consumption.value.status = 3;
@@ -110,6 +110,10 @@ function submit() {
     consumption.value.status,
   ];
   submitStatus.value = checkSubmit(inputStatusArray);
+
+  setTimeout(() => {
+    submitStatus.value = 0;
+  }, 3000);
   // console.log(inputStatusArray, 123, submitStatus.value);
 }
 </script>
@@ -287,6 +291,28 @@ function submit() {
             order: 99;
           }
         }
+        &.no-result {
+          .lottery__input {
+            border-radius: 20px;
+            padding: 5px 13px;
+            border: 3px solid #e06d6d;
+            background: var(--text-color-white, #fff);
+          }
+          &::before {
+            content: "no result";
+            color: #e06d6d;
+            position: absolute;
+            top: 100%;
+            left: 0px;
+            /* Capation 12px R */
+            font-family: Noto Sans TC;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            order: 99;
+          }
+        }
         &.required {
           .lottery__input {
             border-radius: 20px;
@@ -379,6 +405,8 @@ function submit() {
       font-weight: 700;
       line-height: 125%;
       letter-spacing: 3.6px;
+      pointer-events: none;
+      cursor: none;
     }
     svg {
       margin-right: 16px;
@@ -515,7 +543,7 @@ function submit() {
           for="store"
           :class="{
             required: store.status === 1,
-            error: store.status === 2,
+            'no-result': store.status === 2,
           }"
           >store<span>*</span>
           <div class="lottery__input lottery__input--hidden">
