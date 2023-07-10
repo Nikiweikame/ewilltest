@@ -60,8 +60,7 @@ onMounted(() => {
   // background-color: #204379;
   height: 789px;
   padding: 60px 24px 40px;
-  background: url(/ewill-project/src/assets/白色海浪.png) -500px 50px/1414px 739px
-      no-repeat,
+  background: url("../assets/白色海浪.png") -500px 50px/1414px 739px no-repeat,
     #204379;
   &__title {
     p {
@@ -270,17 +269,16 @@ onMounted(() => {
 @media screen and (min-width: 768px) {
   .header {
     height: 643px;
-    background: url(/ewill-project/src/assets/白色海浪.png) -1693px 38px/4784px 586px
-        no-repeat,
+    background: url("../assets/白色海浪.png") -1693px 38px/4784px 586px no-repeat,
       #204379;
   }
 }
 @media screen and (min-width: 1400px) {
-  .header {
-    &__paragraph {
-      // width: 808px;
-    }
-  }
+  // .header {
+  //   &__paragraph {
+  //     // width: 808px;
+  //   }
+  // }
 }
 </style>
 <template>

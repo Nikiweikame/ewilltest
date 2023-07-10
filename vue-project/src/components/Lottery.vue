@@ -119,8 +119,7 @@ const payment = ref("digital payment");
         font-weight: 400;
         line-height: 140%;
         &#store {
-          background: url(/ewill-project/src/assets/icons.png) no-repeat right
-            15px center;
+          background: url("../assets/icons.png") no-repeat right 15px center;
         }
         &:focus {
           outline: none; /* 取消聚焦時的默認外框線 */
@@ -157,8 +156,7 @@ const payment = ref("digital payment");
           -webkit-appearance: none;
           -moz-appearance: none;
           appearance: none;
-          background: url(/ewill-project/src/assets/icons.png) no-repeat right
-            15px center;
+          background: url("../assets/icons.png") no-repeat right 15px center;
         }
       }
       + label {
