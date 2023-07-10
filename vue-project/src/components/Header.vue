@@ -167,6 +167,8 @@ onMounted(() => {
   }
   &__paragraph {
     // height: 489px;
+    max-width: 808px;
+    margin: 0 auto;
     border-radius: 20px;
     border: 2px solid var(--primary-color-2, #b57556);
     background: var(--primary-color-3, #dae4f1);
@@ -276,8 +278,7 @@ onMounted(() => {
 @media screen and (min-width: 1400px) {
   .header {
     &__paragraph {
-      width: 808px;
-      margin: 0 auto;
+      // width: 808px;
     }
   }
 }
