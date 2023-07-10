@@ -56,6 +56,8 @@ const giftList = ref([
 .gift {
   background: url(../assets/沙子414.png) -89px -19px;
   height: 684px;
+  justify-content: center;
+  margin: 0 auto;
   border-radius: 40px 40px 0px 0px;
   padding: 40px 21px;
   display: grid;
@@ -139,6 +141,10 @@ const giftList = ref([
   }
 }
 @media screen and (min-width: 768px) {
+  .gift {
+    height: 531px;
+    grid-template-columns: repeat(3, 178px);
+  }
 }
 @media screen and (min-width: 1400px) {
 }
