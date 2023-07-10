@@ -1,7 +1,117 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
+
+const store = ref({
+  value: "",
+  status: 0,
+  validate: () => {
+    const value = store.value.value.toLowerCase();
+    const options = document.querySelectorAll("#storeList option");
+
+    let isValid = false;
+    options.forEach((option) => {
+      if (option.value.toLowerCase() === value) {
+        isValid = true;
+      }
+    });
+    if (store.value.value.length === 0) {
+      store.value.status = 1;
+      // console.log(store.value.status, store.value.value);
+      return;
+    } else if (!isValid) {
+      store.value.status = 2;
+      // console.log(store.value.status, store.value.value);
+      return;
+    } else {
+      store.value.status = 3;
+      // console.log(store.value.status, store.value.value);
+      return;
+    }
+  },
+});
+const name = ref({
+  value: "",
+  status: 0,
+  validate: () => {
+    const pattern = new RegExp("^[\u4e00-\u9fa5a-zA-Z]+$");
+    const isValid = pattern.test(name.value.value);
+    if (name.value.value.length === 0) {
+      name.value.status = 1;
+      // console.log(name.value.status, name.value.value);
+      return;
+    } else if (!isValid) {
+      name.value.status = 2;
+      // console.log(name.value.status, isValid);
+      return;
+    } else {
+      name.value.status = 3;
+      // console.log(name.value.status, name.value.value);
+      return;
+    }
+  },
+});
+const phone = ref({
+  value: "",
+  status: 0,
+  validate: () => {
+    const pattern = new RegExp("^09[-]?[\\d]{2}[-]?[\\d]{3}[-]?[\\d]{3}$");
+    const isValid = pattern.test(phone.value.value);
+    if (phone.value.value.length === 0) {
+      phone.value.status = 1;
+      // console.log(phone.value.status, phone.value.value);
+      return;
+    } else if (!isValid) {
+      phone.value.status = 2;
+      // console.log(phone.value.status, isValid, phone.value.value);
+      return;
+    } else {
+      phone.value.status = 3;
+      // console.log(phone.value.status, phone.value.value);
+      return;
+    }
+  },
+});
+const consumption = ref({
+  value: "",
+  status: 0,
+  validate: () => {
+    if (consumption.value.value.length === 0) {
+      consumption.value.status = 1;
+      // console.log(consumption.value.status, consumption.value.value);
+      return;
+    } else if (!(parseInt(consumption.value.value) > 0)) {
+      // consumption.value.status = 2;
+      console.log(consumption.value.status);
+      return;
+    } else {
+      consumption.value.status = 3;
+      // console.log(consumption.value.status, consumption.value.value > 0);
+      return;
+    }
+  },
+});
 
 const payment = ref("digital payment");
+
+const submitText = ref("submit");
+const submitStatus = ref(0);
+function checkSubmit(arr) {
+  if (arr.every((num) => num === 3)) {
+    return 1;
+  } else {
+    return 2;
+  }
+}
+function submit() {
+  const inputStatusArray = [
+    store.value.status,
+    name.value.status,
+    phone.value.status,
+    consumption.value.status,
+  ];
+  submitStatus.value = checkSubmit(inputStatusArray);
+  // console.log(inputStatusArray, 123, submitStatus.value);
+}
 </script>
 <style lang="scss" scoped>
 .lottery {
@@ -46,121 +156,172 @@ const payment = ref("digital payment");
     right: 0;
     top: -10px;
   }
-  &__input-group {
-    border-radius: 16px;
-    border: 2px solid var(--primary-color-2, #b57556);
-    background: #fff;
-    box-shadow: 0px 1px 20px 0px rgba(73, 72, 72, 0.25);
-    max-width: 808px;
-    margin: 0 auto;
-    padding: 38px 18px;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    height: 575px;
-    padding: 40px 20px;
-    label {
-      display: block;
-      color: var(--primary-color-1, #204379);
-      /* Body 16px R */
+  &__input {
+    margin-top: 4px;
+    width: 100%;
+    height: 57px;
+    padding: 7px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--primary-color-1, #204379);
+    background: var(--text-color-white, #fff);
+
+    color: var(--text-color-text-color-2, #212121);
+    /* Body 16px R */
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    overflow: hidden;
+
+    &--hidden {
+      background: url("../assets/icons.png") no-repeat right 15px center;
+    }
+    &#payment {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: url("../assets/icons.png") no-repeat right 15px center;
+    }
+    input {
+      border: 0;
+      height: 100%;
+      width: 120%;
+      outline: none;
+
+      color: var(--text-color-text-color-2, #212121);
       font-family: Noto Sans TC;
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: 140%;
-      position: relative;
-      padding-bottom: 4px;
-      &.error {
-        input {
-          border-radius: 20px;
-          padding: 5px 13px;
-          border: 3px solid #e06d6d;
-          background: var(--text-color-white, #fff);
-        }
-        &::before {
-          content: "required";
-          color: #e06d6d;
-          position: absolute;
-          top: 100%;
-          left: 0px;
-          /* Capation 12px R */
-          font-family: Noto Sans TC;
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 140%;
-          order: 99;
-        }
-      }
-      span {
-        margin-left: 4px;
-        color: var(--primary-color-2, #b57556);
-        /* Subtitle 14px B */
-        font-family: Noto Sans TC;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 140%;
-      }
-      input {
-        margin-top: 4px;
-        width: 100%;
-        height: 57px;
-        padding: 7px 15px;
-        border-radius: 20px;
-        border: 1px solid var(--primary-color-1, #204379);
-        background: var(--text-color-white, #fff);
-
-        color: var(--text-color-text-color-2, #212121);
+      background-color: transparent;
+      &::placeholder {
+        color: var(--text-color-text-color-7, #bdbdbd);
         /* Body 16px R */
         font-family: Noto Sans TC;
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
         line-height: 140%;
-        &#store {
-          background: url("../assets/icons.png") no-repeat right 15px center;
-        }
-        &:focus {
-          outline: none; /* 取消聚焦時的默認外框線 */
-          padding: 5px 13px;
-          border-radius: 20px;
-          border: 3px solid #93bbf9;
-          background: var(--text-color-white, #fff);
-        }
-        &::placeholder {
-          color: var(--text-color-text-color-7, #bdbdbd);
-          /* Body 16px R */
-          font-family: Noto Sans TC;
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 140%;
-        }
       }
-      select {
-        margin-top: 4px;
-        width: 100%;
-        height: 57px;
-        padding: 7px 15px;
-        border-radius: 20px;
-        border: 1px solid var(--primary-color-1, #204379);
+    }
+    &:hover {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    &:focus {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: none; /* 取消聚焦時的默認外框線 */
+      padding: 5px 13px;
+      border-radius: 20px;
+      border: 3px solid #93bbf9;
+      background: var(--text-color-white, #fff);
+    }
+    &:focus-within {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: none; /* 取消聚焦時的默認外框線 */
+      padding: 5px 13px;
+      border-radius: 20px;
+      border: 3px solid #93bbf9;
+      // background: var(--text-color-white, #fff);
+    }
+    &::placeholder {
+      color: var(--text-color-text-color-7, #bdbdbd);
+      /* Body 16px R */
+      font-family: Noto Sans TC;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+    }
+    &-group {
+      border-radius: 16px;
+      border: 2px solid var(--primary-color-2, #b57556);
+      background: #fff;
+      box-shadow: 0px 1px 20px 0px rgba(73, 72, 72, 0.25);
+      max-width: 808px;
+      margin: 0 auto;
+      padding: 38px 18px;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      height: 575px;
+      padding: 40px 20px;
 
-        color: var(--text-color-text-color-2, #212121);
+      label {
+        display: block;
+        color: var(--primary-color-1, #204379);
+        /* Body 16px R */
         font-family: Noto Sans TC;
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
         line-height: 140%;
-        &#payment {
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          background: url("../assets/icons.png") no-repeat right 15px center;
+        position: relative;
+        padding-bottom: 4px;
+        &.error {
+          .lottery__input {
+            border-radius: 20px;
+            padding: 5px 13px;
+            border: 3px solid #e06d6d;
+            background: var(--text-color-white, #fff);
+          }
+          &::before {
+            content: "wrong format";
+            color: #e06d6d;
+            position: absolute;
+            top: 100%;
+            left: 0px;
+            /* Capation 12px R */
+            font-family: Noto Sans TC;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            order: 99;
+          }
         }
-      }
-      + label {
-        margin-top: 16px;
+        &.required {
+          .lottery__input {
+            border-radius: 20px;
+            padding: 5px 13px;
+            border: 3px solid #e06d6d;
+            background: var(--text-color-white, #fff);
+          }
+          &::before {
+            content: "required";
+            color: #e06d6d;
+            position: absolute;
+            top: 100%;
+            left: 0px;
+            /* Capation 12px R */
+            font-family: Noto Sans TC;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            order: 99;
+          }
+        }
+        span {
+          margin-left: 4px;
+          color: var(--primary-color-2, #b57556);
+          /* Subtitle 14px B */
+          font-family: Noto Sans TC;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 140%;
+        }
+        + label {
+          margin-top: 16px;
+        }
       }
     }
   }
@@ -182,8 +343,45 @@ const payment = ref("digital payment");
     letter-spacing: 3.6px;
     text-align: center;
     transition: all 1s ease;
+
+    border: 0;
+    display: block;
+    cursor: pointer;
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
+    }
+    &:active {
+      border-radius: 50px;
+      background: #d3a995;
+      box-shadow: 0px -4px 10px 0px rgba(255, 255, 255, 0.9),
+        0px 4px 10px 0px rgba(40, 35, 35, 0.35);
+    }
+    &--pass {
+      display: flex;
+      justify-content: center;
+      color: #e6ffb1;
+      font-family: Noto Sans TC;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 125%;
+      letter-spacing: 3.6px;
+      pointer-events: none;
+      cursor: none;
+    }
+    &--failure {
+      display: flex;
+      justify-content: center;
+      color: #ffe3e3;
+      font-family: Noto Sans TC;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 125%;
+      letter-spacing: 3.6px;
+    }
+    svg {
+      margin-right: 16px;
     }
   }
 }
@@ -193,7 +391,7 @@ const payment = ref("digital payment");
 }
 </style>
 <template>
-  <div class="lottery" id="form">
+  <form class="lottery" id="form" @submit.prevent="submit()">
     <div class="lottery__form">
       <fieldset class="lottery__input-group">
         <legend class="lottery__title-content">
@@ -312,62 +510,154 @@ const payment = ref("digital payment");
             />
           </svg>
         </legend>
-        <label id="store" for="store"
+        <label
+          id="store"
+          for="store"
+          :class="{
+            required: store.status === 1,
+            error: store.status === 2,
+          }"
           >store<span>*</span>
-          <input
-            type="text"
-            name="store"
-            id="store"
-            list="storeList"
-            placeholder="placeholder text"
-          />
-          <datalist id="storeList">
-            <option value="store1"></option>
-            <option value="store2"></option>
-            <option value="store3"></option>
-            <option value="store4"></option>
-            <option value="store5"></option>
-            <option value="store6"></option>
-          </datalist>
+          <div class="lottery__input lottery__input--hidden">
+            <input
+              type="text"
+              name="store"
+              id="store"
+              list="storeList"
+              placeholder="placeholder text"
+              v-model.lazy="store.value"
+              @blur="store.validate()"
+              required
+            />
+            <datalist id="storeList">
+              <option value="store1"></option>
+              <option value="store2"></option>
+              <option value="store3"></option>
+              <option value="store4"></option>
+              <option value="store5"></option>
+              <option value="store6"></option>
+            </datalist>
+          </div>
         </label>
-        <label id="name" for="name"
+        <label
+          id="name"
+          for="name"
+          :class="{
+            required: name.status === 1,
+            error: name.status === 2,
+          }"
           >name<span>*</span>
           <input
+            class="lottery__input"
             type="text"
             name="name"
             id="name"
             placeholder="placeholder text"
+            v-model.lazy="name.value"
+            @blur="name.validate()"
+            required
           />
         </label>
-        <label id="phone" for="phone"
+        <label
+          id="phone"
+          for="phone"
+          :class="{
+            required: phone.status === 1,
+            error: phone.status === 2,
+          }"
           >phone<span>*</span>
           <input
+            class="lottery__input"
             type="tel"
             inputmode="tel"
             name="phone"
             id="phone"
             placeholder="placeholder text"
+            v-model.lazy="phone.value"
+            @blur="phone.validate()"
+            required
           />
         </label>
-        <label id="consumption" for="consumption"
+        <label
+          id="consumption"
+          for="consumption"
+          :class="{
+            required: consumption.status === 1,
+            error: consumption.status === 2,
+          }"
           >Amount of consumption<span>*</span>
           <input
+            class="lottery__input"
             type="number"
             inputmode="numeric"
             name="consumption"
             id="consumption"
             placeholder="placeholder text"
+            v-model.lazy="consumption.value"
+            @blur="consumption.validate()"
+            required
           />
         </label>
         <label id="payment" for="payment"
           >payment<span>*</span>
-          <select v-model="payment" name="payment" id="payment">
+          <select
+            class="lottery__input"
+            v-model.lazy="payment"
+            name="payment"
+            id="payment"
+          >
             <option value="digital payment">digital payment</option>
             <option value="ATM">ATM</option>
           </select>
         </label>
       </fieldset>
     </div>
-    <div class="lottery__submit">submit</div>
-  </div>
+    <button v-if="submitStatus === 0" class="lottery__submit" type="submit">
+      submit
+    </button>
+    <button
+      v-else-if="submitStatus === 1"
+      class="lottery__submit lottery__submit--pass"
+      type="submit"
+    >
+      <svg
+        width="24"
+        height="25"
+        viewBox="0 0 24 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M12 0.5C5.376 0.5 0 5.876 0 12.5C0 19.124 5.376 24.5 12 24.5C18.624 24.5 24 19.124 24 12.5C24 5.876 18.624 0.5 12 0.5ZM9.35615 14.8608C9.49088 14.9952 9.70897 14.995 9.84351 14.8605L16.656 8.04801C17.1261 7.57794 17.8886 7.57929 18.357 8.05101C18.8231 8.52038 18.8217 9.27829 18.354 9.74601L10.4276 17.6724C9.97052 18.1295 9.22948 18.1295 8.77241 17.6724L4.44659 13.3466C3.97903 12.879 3.97903 12.121 4.44659 11.6534C4.91369 11.1863 5.67084 11.1858 6.13859 11.6522L9.35615 14.8608Z"
+          fill="#E6FFB1"
+        />
+      </svg>
+
+      success
+    </button>
+    <button
+      v-else-if="submitStatus === 2"
+      class="lottery__submit lottery__submit--failure"
+      type="submit"
+    >
+      <svg
+        width="24"
+        height="25"
+        viewBox="0 0 24 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M20.4871 20.9853C18.2367 23.2357 15.1844 24.5 12.0018 24.5C8.81921 24.5 5.76697 23.2357 3.51653 20.9853C1.26609 18.7348 0.00181287 15.6826 0.00181287 12.5C0.00181287 9.3174 1.26609 6.26516 3.51653 4.01472C5.76697 1.76428 8.81921 0.5 12.0018 0.5C15.1844 0.5 18.2367 1.76428 20.4871 4.01472C22.7375 6.26516 24.0018 9.3174 24.0018 12.5C24.0018 15.6826 22.7375 18.7348 20.4871 20.9853ZM16.2445 8.25736C15.7758 7.78873 15.016 7.78873 14.5474 8.25736L12.0018 10.8029L9.45623 8.25736C8.9876 7.78873 8.2278 7.78873 7.75917 8.25736V8.25736C7.29054 8.72599 7.29054 9.48579 7.75917 9.95441L10.3048 12.5L7.75917 15.0456C7.29054 15.5142 7.29054 16.274 7.75917 16.7426V16.7426C8.2278 17.2113 8.9876 17.2113 9.45623 16.7426L12.0018 14.1971L14.5474 16.7426C15.016 17.2113 15.7758 17.2113 16.2445 16.7426V16.7426C16.7131 16.274 16.7131 15.5142 16.2445 15.0456L13.6989 12.5L16.2445 9.95442C16.7131 9.48579 16.7131 8.72599 16.2445 8.25736V8.25736Z"
+          fill="#FFE3E3"
+        />
+      </svg>
+      failure
+    </button>
+    <!-- <input class="lottery__submit" type="submit" :value="submitText" /> -->
+  </form>
 </template>
