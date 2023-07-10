@@ -524,7 +524,7 @@ function submit() {
               name="store"
               id="store"
               list="storeList"
-              placeholder="placeholder text"
+              placeholder="Please enter the store."
               v-model.lazy="store.value"
               @blur="store.validate()"
               required
@@ -552,7 +552,7 @@ function submit() {
             type="text"
             name="name"
             id="name"
-            placeholder="placeholder text"
+            placeholder="Please enter your name."
             v-model.lazy="name.value"
             @blur="name.validate()"
             required
@@ -572,7 +572,7 @@ function submit() {
             inputmode="tel"
             name="phone"
             id="phone"
-            placeholder="placeholder text"
+            placeholder="Please enter your phone number."
             v-model.lazy="phone.value"
             @blur="phone.validate()"
             required
@@ -592,7 +592,7 @@ function submit() {
             inputmode="numeric"
             name="consumption"
             id="consumption"
-            placeholder="placeholder text"
+            placeholder="Please enter your consumption."
             v-model.lazy="consumption.value"
             @blur="consumption.validate()"
             required
