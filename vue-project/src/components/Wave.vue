@@ -18,7 +18,7 @@
 }
 
 @media screen and (min-width: 1564px) {
-  div {
+  .wave {
     background-size: contain;
   }
 }
