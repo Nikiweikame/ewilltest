@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
-  base:"/ewill-project/",
+  base:"/ewilltest/",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
